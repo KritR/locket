@@ -1,0 +1,9 @@
+[package]
+name = "locket"
+version = "0.1.0"
+authors = ["Krithik Rao <krdevmail@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+clap = "3.0.0-beta.2"
+openssl = { version = "0.10",, features = ["vendored"] }
