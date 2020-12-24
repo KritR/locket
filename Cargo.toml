@@ -7,3 +7,5 @@ edition = "2018"
 [dependencies]
 clap = "3.0.0-beta.2"
 openssl = { version = "0.10", features = ["vendored"] }
+git2 = "0.13.14"
+dialoguer = "0.7.1"

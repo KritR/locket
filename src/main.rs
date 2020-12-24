@@ -12,8 +12,10 @@ mod commands;
 enum Locket {
     #[clap(about = "Initializes locket secret management in this repo")]
     Init {
-        #[clap(parse(from_os_str))]
+        #[clap(short, long, parse(from_os_str))]
         dir: Option<PathBuf>,
+        #[clap(short, long)]
+        remote: Option<String>,
     },
     #[clap(about = "Checks the status of the locked files in the repo")]
     Status,
@@ -43,23 +45,23 @@ fn main() {
     let opts: Locket = Locket::parse();
 
     match opts {
-        Locket::Init { dir } => {
-            commands::init(dir);
+        Locket::Init { dir, remote } => {
+            commands::init(dir, remote);
         }
         Locket::Status => {
             commands::status();
         }
         Locket::Add { files } => {
-            commands::add(files);
+            commands::add(&files);
         }
         Locket::Rm { files } => {
-            commands::rm(files);
+            commands::rm(&files);
         }
         Locket::Lock { files } => {
-            commands::lock(files);
+            commands::lock(&files);
         }
         Locket::Unlock { files } => {
-            commands::unlock(files);
+            commands::unlock(&files);
         }
     }
 }
