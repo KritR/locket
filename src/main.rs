@@ -44,24 +44,17 @@ enum Locket {
 fn main() {
     let opts: Locket = Locket::parse();
 
-    match opts {
-        Locket::Init { dir, remote } => {
-            commands::init(dir, remote);
-        }
-        Locket::Status => {
-            commands::status();
-        }
-        Locket::Add { files } => {
-            commands::add(&files);
-        }
-        Locket::Rm { files } => {
-            commands::rm(&files);
-        }
-        Locket::Lock { files } => {
-            commands::lock(&files);
-        }
-        Locket::Unlock { files } => {
-            commands::unlock(&files);
-        }
+    let res: Result<(), String> = match opts {
+        Locket::Init { dir, remote } => commands::init(dir, remote),
+        Locket::Status => commands::status(),
+        Locket::Add { files } => commands::add(&files),
+        Locket::Rm { files } => commands::rm(&files),
+        Locket::Lock { files } => commands::lock(&files),
+        Locket::Unlock { files } => commands::unlock(&files),
+    };
+
+    if res.is_err() {
+        println!("An error occurred");
+        println!("{}", res.err().unwrap());
     }
 }
